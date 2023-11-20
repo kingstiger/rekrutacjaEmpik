@@ -1,12 +1,10 @@
 package com.rekrutacja.empik.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
-@AllArgsConstructor
 @Builder
 @Data
 public class ErrorMessage {

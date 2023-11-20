@@ -98,6 +98,7 @@ class GitHubRestConnectorTest {
     private String sampleLogin() {
         return "octocat";
     }
+
     private String sampleDifferentLogin() {
         return "aoctocat1";
     }

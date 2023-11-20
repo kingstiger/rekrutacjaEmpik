@@ -1,5 +1,6 @@
 package com.rekrutacja.empik.controller;
 
+import com.rekrutacja.empik.errorhandler.WrongLoginException;
 import com.rekrutacja.empik.model.RequestCountEntity;
 import com.rekrutacja.empik.model.UserDataResponse;
 import com.rekrutacja.empik.service.UserDataService;
@@ -19,11 +20,18 @@ public class UserDataController {
 
     @GetMapping("/{login}")
     public ResponseEntity<UserDataResponse> getUserData(@PathVariable("login") String login) {
+        if(login == null || login.isEmpty()) {
+            throw new WrongLoginException("No login was provided");
+        }
+
         return ResponseEntity.ofNullable(userDataService.processUserDataRequest(login));
     }
 
     @GetMapping("/count/{login}")
     public ResponseEntity<RequestCountEntity> getRequestAmount(@PathVariable("login") String login) {
+        if(login == null || login.isEmpty()) {
+            throw new WrongLoginException("No login was provided");
+        }
         return ResponseEntity.of(userDataService.getCount(login));
     }
 }

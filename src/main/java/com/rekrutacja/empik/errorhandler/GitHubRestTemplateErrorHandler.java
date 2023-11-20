@@ -12,17 +12,14 @@ public class GitHubRestTemplateErrorHandler
         implements ResponseErrorHandler {
 
     @Override
-    public boolean hasError(ClientHttpResponse httpResponse)
-            throws IOException {
+    public boolean hasError(ClientHttpResponse httpResponse) throws IOException {
 
-        return (
-                httpResponse.getStatusCode().is4xxClientError()
+        return (httpResponse.getStatusCode().is4xxClientError()
                         || httpResponse.getStatusCode().is5xxServerError());
     }
 
     @Override
-    public void handleError(ClientHttpResponse httpResponse)
-            throws IOException {
+    public void handleError(ClientHttpResponse httpResponse) throws IOException {
 
             if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
                 throw new UserNotFoundException();

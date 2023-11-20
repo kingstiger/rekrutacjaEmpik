@@ -1,6 +1,7 @@
 package com.rekrutacja.empik.service;
 
 import com.rekrutacja.empik.connector.GitHubRestConnector;
+import com.rekrutacja.empik.errorhandler.CalculationInfiniteException;
 import com.rekrutacja.empik.model.GitHubUser;
 import com.rekrutacja.empik.model.RequestCountEntity;
 import com.rekrutacja.empik.model.UserDataResponse;
@@ -31,6 +32,7 @@ public class UserDataService {
     private void saveOrUpdateRequestCount(String login) {
         Optional<RequestCountEntity> loginRequestCount = userDataRepository.findById(login);
         RequestCountEntity requestCountEntity;
+
         if(loginRequestCount.isPresent()) {
             requestCountEntity = loginRequestCount.get();
             Long requestCount = requestCountEntity.getRequestCount();
@@ -40,10 +42,15 @@ public class UserDataService {
             requestCountEntity.setLogin(login);
             requestCountEntity.setRequestCount(1L);
         }
+
         userDataRepository.save(requestCountEntity);
     }
 
     private Double doCalculations(GitHubUser gitHubUser) {
-        return 6.0/gitHubUser.getFollowers()*(2+gitHubUser.getPublicRepos());
+        Double result = 6.0 / gitHubUser.getFollowers() * (2 + gitHubUser.getPublicRepos());
+        if(result.isInfinite()) {
+            throw new CalculationInfiniteException();
+        }
+        return result;
     }
 }
