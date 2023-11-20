@@ -1,0 +1,1 @@
+Zadanie na potrzeby rekrutacji w Empik. Projekt można uruchomić komendą: mvn spring-boot:run. W ramach bazy danych użyto H2 z zapisem do pliku, w celu zapewnienia trwałości danych, natomiast jest możliwość zmiany bazy danych w razie potrzeby.
